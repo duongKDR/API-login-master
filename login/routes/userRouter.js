@@ -63,7 +63,7 @@ router.post('/login', async (req, res) => {
         const _CONF = {
             username: user.username,
         };
-        const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE || "3650d";
+        const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE || "365d";
 
 
         const refreshToken = jwt.sign({
@@ -71,10 +71,7 @@ router.post('/login', async (req, res) => {
 
         },
             refreshTokenLife,
-            // {
-            //     algorithm: 'HS256',
-            //     expiresIn: accessTokenLife,
-            // }, 
+
         )
 
 
@@ -92,8 +89,10 @@ router.post('/login', async (req, res) => {
 
 
 
-router.post('/generKey' , (req , res)=>{
-    // router code here
+router.get('/', (req, res) => {
+    const key = require('crypto').randomBytes(12).toString('hex')
+    console.log("key", key);
+    return res.status(200).json(key);
 })
 
 
